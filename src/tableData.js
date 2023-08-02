@@ -87,6 +87,7 @@ const tableData = [
     cgpa: '9.3',
     image: image8,
   },
+  
   {
     id: 9,
     name: 'James Rodriguez',

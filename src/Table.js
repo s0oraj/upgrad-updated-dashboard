@@ -76,10 +76,11 @@ const Table = () => {
     });
   };
 
+  
   return (
     <main className="table">
       <section className="table__header">
-           <h1 style={{ fontSize: '36px', fontWeight: 'bold', marginBottom: '1rem', lineHeight: '1.5' }}>
+           <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '1rem', lineHeight: '1.5' }}>
           
           Student's Details
         </h1>
