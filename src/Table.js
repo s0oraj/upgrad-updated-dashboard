@@ -14,6 +14,7 @@ import html2canvas from 'html2canvas';
 const Table = () => {
   const [searchValue, setSearchValue] = useState('');
   const [filteredData, setFilteredData] = useState(tableData);
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
   const exportButtonRef = useRef(null);
 
   // Handle search logic
@@ -26,6 +27,21 @@ const Table = () => {
       item.name.toLowerCase().includes(searchQuery)
     );
     setFilteredData(filteredResults);
+  };
+
+  // Function to sort the data
+  const sortData = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    const sortedData = [...filteredData].sort((a, b) => {
+      if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
+      if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
+      return 0;
+    });
+    setSortConfig({ key, direction });
+    setFilteredData(sortedData);
   };
 
   // Export data as JSON
@@ -76,12 +92,10 @@ const Table = () => {
     });
   };
 
-  
   return (
     <main className="table">
       <section className="table__header">
-           <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '1rem', lineHeight: '1.5' }}>
-          
+        <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '1rem', lineHeight: '1.5' }}>
           Student's Details
         </h1>
         <div className="input-group">
@@ -120,12 +134,24 @@ const Table = () => {
         <table ref={exportButtonRef}>
           <thead>
             <tr>
-              <th style={{ fontSize: '20px' }}>Id</th>
-              <th style={{ fontSize: '20px' }}>Student</th>
-              <th style={{ fontSize: '20px' }}>Course</th>
-              <th style={{ fontSize: '20px' }}>Date of Birth</th>
-              <th style={{ fontSize: '20px' }}>Status</th>
-              <th style={{ fontSize: '20px' }}>CGPA</th>
+              <th style={{ fontSize: '20px' }} onClick={() => sortData('id')}>
+                Id {sortConfig.key === 'id' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              </th>
+              <th style={{ fontSize: '20px' }} onClick={() => sortData('name')}>
+                Student {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              </th>
+              <th style={{ fontSize: '20px' }} onClick={() => sortData('course')}>
+                Course {sortConfig.key === 'course' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              </th>
+              <th style={{ fontSize: '20px' }} onClick={() => sortData('dateOfBirth')}>
+                Date of Birth {sortConfig.key === 'dateOfBirth' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              </th>
+              <th style={{ fontSize: '20px' }} onClick={() => sortData('status')}>
+                Status {sortConfig.key === 'status' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              </th>
+              <th style={{ fontSize: '20px' }} onClick={() => sortData('cgpa')}>
+                CGPA {sortConfig.key === 'cgpa' && (sortConfig.direction === 'ascending' ? '▲' : '▼')}
+              </th>
             </tr>
           </thead>
           <tbody>
