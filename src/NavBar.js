@@ -1,4 +1,3 @@
-// NavBar.js
 import React from 'react';
 import {
   AppBar,
@@ -10,6 +9,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Avatar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -29,15 +29,19 @@ const NavBar = ({ isDrawerOpen, toggleDrawer }) => {
     <>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleDrawer} // Toggle the drawer state
-          >
+          <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">Student Dashboard</Typography>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Student Dashboard
+          </Typography>
+          {/* Add the logged-in user icon and name */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar alt="Nainu Wadhwa" src="./pics/user-icon.jpg" />
+            <Typography variant="subtitle1" sx={{ marginLeft: '0.5rem' }}>
+              Nainu Wadhwa
+            </Typography>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="temporary" anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
